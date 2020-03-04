@@ -82,13 +82,13 @@ class Dejavu(object):
         while True:
             try:
                 print('* * * Start Finger printing * * *')
-                # M1： calculate the fingerprint time
+                # M1: calculate the fingerprint time
                 # start=time.time()
                 song_name, hashes, file_hash = iterator.next() #code for fingerprint
                 # end=time.time()
                 # r_time=end-start
                 # print('Running time: %s Seconds' % r_time)
-                # M1： calculate the fingerprint time
+                # M1: calculate the fingerprint time
 
             except multiprocessing.TimeoutError:
                 continue
@@ -100,7 +100,7 @@ class Dejavu(object):
                 traceback.print_exc(file=sys.stdout)
             else:
                 print"* * * Insert to databases * * *\n"
-                # M2： calculate the database time
+                # M2: calculate the database time
                 # start = time.time()
                 sid = self.db.insert_song(song_name, file_hash)
                 self.db.insert_hashes(sid, hashes)
@@ -109,7 +109,7 @@ class Dejavu(object):
                 # end = time.time()
                 # w_time = end - start
                 # print('Writing time: %s Seconds' % w_time)
-                # M2： calculate the database time
+                # M2: calculate the database time
 
         pool.close()
         pool.join()
