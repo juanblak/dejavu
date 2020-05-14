@@ -52,7 +52,7 @@ class Dejavu(object):
 
         try:
             nprocesses = nprocesses or multiprocessing.cpu_count()
-            print multiprocessing.cpu_count()
+            # print multiprocessing.cpu_count()
         except NotImplementedError:
             nprocesses = 1
         else:
@@ -81,14 +81,10 @@ class Dejavu(object):
         # Loop till we have all of them fingerprinted
         while True:
             try:
-                print('* * * Start Finger printing * * *')
-                # M1: calculate the fingerprint time
-                # start=time.time()
+                # print('* * * Start Finger printing * * *')
+                # M1:calculate the fingerprint time
                 song_name, hashes, file_hash = iterator.next() #code for fingerprint
-                # end=time.time()
-                # r_time=end-start
-                # print('Running time: %s Seconds' % r_time)
-                # M1: calculate the fingerprint time
+                # M1:calculate the fingerprint time
 
             except multiprocessing.TimeoutError:
                 continue
@@ -99,17 +95,14 @@ class Dejavu(object):
                 # Print traceback because we can't reraise it here
                 traceback.print_exc(file=sys.stdout)
             else:
-                print"* * * Insert to databases * * *\n"
-                # M2: calculate the database time
-                # start = time.time()
+                # print"* * * Insert to databases * * *\n"
+                # M2:calculate the database time
                 sid = self.db.insert_song(song_name, file_hash)
                 self.db.insert_hashes(sid, hashes)
+                # M2:calculate the database time
                 self.db.set_song_fingerprinted(sid)
                 self.get_fingerprinted_songs()
-                # end = time.time()
-                # w_time = end - start
-                # print('Writing time: %s Seconds' % w_time)
-                # M2: calculate the database time
+
 
         pool.close()
         pool.join()
@@ -211,12 +204,12 @@ def _fingerprint_worker(filename, limit=None, song_name=None):
 
     for channeln, channel in enumerate(channels):
         # TODO: Remove prints or change them into optional logging.
-        print("Fingerprinting channel %d/%d for %s" % (channeln + 1,
-                                                       channel_amount,
-                                                       filename))
+        # print("Fingerprinting channel %d/%d for %s" % (channeln + 1,
+        #                                                channel_amount,
+        #                                                filename))
         hashes = fingerprint.fingerprint(channel, Fs=Fs)
-        print("Finished channel %d/%d for %s" % (channeln + 1, channel_amount,
-                                                 filename))
+        # print("Finished channel %d/%d for %s" % (channeln + 1, channel_amount,
+        #                                          filename))
         result |= set(hashes)
 
     return song_name, result, file_hash
