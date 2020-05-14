@@ -17,6 +17,7 @@ if __name__ == '__main__':
 	# Recognize audio from a file
 	testdir="test_reaction"
 	# testdir = "test_fancam"
+
 	rc=0 # can detect
 	nc=0 # can't detect
 	yc=0 # right result
@@ -25,7 +26,7 @@ if __name__ == '__main__':
 		for filename in testfiles:
 			song= djv.recognize(FileRecognizer, testdir+"/"+filename)
 			if song == None: #can't detect
-				print filename,song
+				print "None",filename,song
 				nc+= 1
 				continue
 
